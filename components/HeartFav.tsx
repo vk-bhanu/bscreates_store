@@ -43,10 +43,14 @@ const HeartFav = ({product, updateSignedInUser}: HeartFavProps ) => {
             return;
         } else {
             setLoading(true)
-            const res = await fetch("/api/users/wishlist",{
+            const res = await fetch("/api/users/wishlist", {
                 method: "POST",
-                body: JSON.stringify({ productId: product._id })
-            })
+                headers: {
+                    "Content-Type": "application/json", // Specify content type
+                },
+                body: JSON.stringify({ productId: product._id }),
+            });
+            
             const updatedUser = await res.json()
     
             setIsLiked(updatedUser.wishlist.includes(product._id))
